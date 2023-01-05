@@ -1,0 +1,68 @@
+update dependency
+go mod tidy
+
+Run project
+go run cmd/server/server.go
+
+sqlite3 data.db
+
+go run github.com/99designs/gqlgen init
+go run github.com/99designs/gqlgen generate
+
+
+================================================================
+
+mutation createCategory {
+  createCategory(input: {name: "Tecnologia", description: "Cursos de tecnologia"}) {
+    id
+    name
+    description
+  }
+}
+
+mutation createCourse {
+  createCourse(input: {name: "Full cycle", description: "The best", categoryId: "6c0b5788-d0a1-4562-9024-56fee7a7ee1a" }) {
+    id
+    name
+  }
+}
+
+
+query queryCategories {
+  categories {
+    id
+    name
+    description
+  }
+}
+
+query queryCategoriesWithCourses {
+  categories {
+    id
+    name
+    description
+    courses {
+      id
+      name
+    }
+  }
+}
+
+query queryCourses {
+  courses {
+    id
+    name
+  }
+}
+
+query queryCoursesWithCategory {
+  courses {
+    id
+    name
+    category {
+      id
+      name
+      description
+    }
+  }
+}
